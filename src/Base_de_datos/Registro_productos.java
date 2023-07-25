@@ -57,7 +57,7 @@ public class Registro_productos extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Nombre");
+        jLabel2.setText("nombre");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 100, 20));
 
         tfnombre.addActionListener(new java.awt.event.ActionListener() {
@@ -69,7 +69,7 @@ public class Registro_productos extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Id");
+        jLabel3.setText("id");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 94, 100, 20));
 
         tfid.addActionListener(new java.awt.event.ActionListener() {
@@ -81,7 +81,7 @@ public class Registro_productos extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Marca");
+        jLabel4.setText("marca");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 100, 20));
 
         tfmarca.addActionListener(new java.awt.event.ActionListener() {
@@ -93,7 +93,7 @@ public class Registro_productos extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Presentacion");
+        jLabel5.setText("presentacion");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 130, 20));
 
         tfpresentacion.addActionListener(new java.awt.event.ActionListener() {
@@ -105,7 +105,7 @@ public class Registro_productos extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Precio");
+        jLabel6.setText("precio");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 100, 20));
 
         tfprecio.addActionListener(new java.awt.event.ActionListener() {

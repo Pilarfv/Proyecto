@@ -94,7 +94,7 @@ public class Ventas_productos extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cantidad_productos");
+        jLabel5.setText("cantidad_productos");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 170, 20));
 
         tfcanpro.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +106,7 @@ public class Ventas_productos extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Nombre_producto");
+        jLabel6.setText("nombre_producto");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 160, 20));
 
         tfnombrepro.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +134,7 @@ public class Ventas_productos extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Precio");
+        jLabel7.setText("precio");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 100, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/windows22 (1).jpg"))); // NOI18N

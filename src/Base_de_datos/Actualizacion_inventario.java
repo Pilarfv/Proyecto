@@ -55,7 +55,7 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Numero de factura");
+        jLabel2.setText("numero de factura");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 160, 20));
 
         tfnumfactura.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +67,7 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Fecha de compra");
+        jLabel3.setText("fecha de compra");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 94, 150, 20));
 
         tffechacompra.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +91,7 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cantidad");
+        jLabel5.setText("cantidad");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 130, 20));
 
         tfcantidad.addActionListener(new java.awt.event.ActionListener() {
@@ -112,7 +112,7 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/windows22 (1).jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 1820));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

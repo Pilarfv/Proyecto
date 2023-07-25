@@ -15,13 +15,7 @@ import org.json.JSONArray;
  */
 public class inicio extends javax.swing.JFrame {
 
-    String nombre="gomitas65",clave="321";
-    String admin="";
-    String claveadmin="admin";
-    String inventario="inventario";
-    String claveinventario="inventario";
-    String ventas="ventas";
-    String claveventas="ventas";
+    String red="";
     
     public inicio() {
         initComponents();
@@ -109,7 +103,7 @@ public class inicio extends javax.swing.JFrame {
         String usuario = tfnombre.getText().toString();
         String clave = tfcontrasena.getText().toString();
         try {
-            String appi = "http://localhost/appi/usuarios.php?usuario="+usuario+"&clave="+clave+"";
+            String appi = "http://localhost/Appi/usuarios.php?usuario="+usuario+"&clave="+clave+"";
             URL url = new URL(appi);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -130,16 +124,17 @@ public class inicio extends javax.swing.JFrame {
             // El API respondió correctamente, ahora se puede realizar la comparación de datos
             // Aquí se puede procesar la respuesta JSON y comparar los datos con los campos de texto
             // Supongamos que la respuesta JSON contiene un array de objetos JSON
-                JSONArray j= new JSONArray(red);
+                JSONArray J= new JSONArray(red);
             
-            if (j.length() > 0) {
+            if (J.length() > 0) {
                 // Si el array contiene al menos un objeto, se considera que existe el usuario y clave
-                entrar.seleccion(tfnombre.getText());
+  
                 entrar.setVisible(true);
                this.setVisible(false);
             } else {
                 // Si el array está vacío, no existe el usuario y clave
                 System.out.println("nop");
+                System.out.println(red);
             }
         } else {
             // Error al realizar la solicitud al API
