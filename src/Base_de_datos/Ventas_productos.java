@@ -41,6 +41,11 @@ public class Ventas_productos extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         tfprecio = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
+        btnInsertar = new javax.swing.JButton();
+        btnImprimir_Ticket = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -137,6 +142,21 @@ public class Ventas_productos extends javax.swing.JFrame {
         jLabel7.setText("precio");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 100, 20));
 
+        btnBuscar.setText("Buscar");
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 50, -1, -1));
+
+        btnActualizar.setText("Actualizar");
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, -1, -1));
+
+        btnBorrar.setText("Borrar");
+        getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, -1, -1));
+
+        btnInsertar.setText("Insertar");
+        getContentPane().add(btnInsertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 110, -1, -1));
+
+        btnImprimir_Ticket.setText("Imprimir Ticket");
+        getContentPane().add(btnImprimir_Ticket, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, -1, -1));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/windows22 (1).jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2360, 390));
 
@@ -213,6 +233,11 @@ public class Ventas_productos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnImprimir_Ticket;
+    private javax.swing.JButton btnInsertar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
