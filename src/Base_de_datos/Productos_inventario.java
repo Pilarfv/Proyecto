@@ -5,6 +5,11 @@
  */
 package Base_de_datos;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONArray;
+
 /**
  *
  * @author dayan
@@ -86,15 +91,35 @@ public class Productos_inventario extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 110, 40));
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, -1, -1));
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, -1, -1));
 
         btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, -1, -1));
 
         btnInsertar.setText("Insertar");
+        btnInsertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnInsertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/windows22 (1).jpg"))); // NOI18N
@@ -122,6 +147,108 @@ public class Productos_inventario extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+   Metodos medo=new Metodos();
+        String id=tfid.getText();
+        String can=tfcantidad.getText();
+        
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/productos_buscar.php?id="+id+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println(leer);
+                } else {
+                   System.out.println("el id  no existe");
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Productos_inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
+     Metodos medo=new Metodos();
+        String id=tfid.getText();
+        String can=tfcantidad.getText();
+        
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/productos_buscar.php?id="+id+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println("El id del producto ya existe");
+                } else {
+
+                    medo.insertar("http://localhost/Appi/btn/productos-registro_insertar.php", "id="+id+"&cantidad="+can);
+                    System.out.println("producto guardado correctamente");
+
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Productos_inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnInsertarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+     Metodos medo=new Metodos();
+        String id=tfid.getText();
+        String can=tfcantidad.getText();
+       
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/productos_buscar.php?id="+id+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println("El id del producto se borro");
+                    medo.borrar("http://localhost/Appi/btn/productos-registro_borrar.php?id="+id+"");
+                } else {
+
+                   System.out.println("el id  no existe");
+
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Productos_inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+     Metodos medo=new Metodos();
+        String id=tfid.getText();
+        String can=tfcantidad.getText();
+        
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/productos_buscar.php?id="+id+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println("el id del prodroducto se actualizo correctamente");
+                    medo.actualizar("http://localhost/Appi/btn/productos_actualizar.php?id="+id+"&cantidad="+can);
+                    
+                } else {
+
+                    System.out.println("el id del prodroducto no existe");
+
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Productos_inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,6 +5,11 @@
  */
 package Base_de_datos;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONArray;
+
 /**
  *
  * @author dayan
@@ -115,9 +120,19 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 100, 40));
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 60, -1, -1));
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 150, -1, -1));
 
         btnBorrar.setText("Borrar");
@@ -172,12 +187,114 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+    Metodos medo=new Metodos();
+        String feco=tffechacompra.getText();
+        String nufa=tfnumfactura.getText();
+        String id=tfid.getText();
+        String can=tfcantidad.getText();
+       
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/actualizacion_buscar.php?numfactura="+nufa+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
 
+                if (J.length() > 0) {
+                    System.out.println("El id del producto se borro");
+                    medo.borrar("http://localhost/Appi/btn/actualizacion_borrar.php?numfactura="+nufa+"");
+                } else {
+
+                   System.out.println("el id  no existe");
+
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Actualizacion_inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-             
+    Metodos medo=new Metodos();
+        String feco=tffechacompra.getText();
+        String nufa=tfnumfactura.getText();
+        String id=tfid.getText();
+        String can=tfcantidad.getText();
+        
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/actualizacion_buscar.php?numfactura="+nufa+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println("El id del producto ya existe");
+                } else {
+                    String parametros="fechcompra=" + feco + "&numfactura=" + nufa + "&id=" + id + "&cantidad=" + can;
+                    medo.insertar("http://localhost/Appi/btn/actualizacion_insertar.php",parametros);
+                    System.out.println("producto guardado correctamente");
+
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Actualizacion_inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }             
     }//GEN-LAST:event_btnInsertarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    Metodos medo=new Metodos();
+        String feco=tffechacompra.getText();
+        String nufa=tfnumfactura.getText();
+        String id=tfid.getText();
+        String can=tfcantidad.getText();
+        
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/actualizacion_buscar.php?numfactura="+nufa+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println(leer);
+                } else {
+                   System.out.println("el id  no existe");
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Actualizacion_inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+     Metodos medo=new Metodos();
+        String feco=tffechacompra.getText();
+        String nufa=tfnumfactura.getText();
+        String id=tfid.getText();
+        String can=tfcantidad.getText();
+        
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/actualizacion_buscar.php?numfactura="+nufa+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println("el id del prodroducto se actualizo correctamente");
+                    medo.actualizar("http://localhost/Appi/btn/actualizacion_actualizar.php?fechcompra="+feco+"&numfactura="+nufa+"&id="+id+"&cantidad="+can);
+                    
+                } else {
+
+                    System.out.println("el id del prodroducto no existe");
+
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Actualizacion_inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments

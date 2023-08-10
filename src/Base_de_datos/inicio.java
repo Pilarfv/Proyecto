@@ -103,7 +103,7 @@ public class inicio extends javax.swing.JFrame {
         String usuario = tfnombre.getText().toString();
         String clave = tfcontrasena.getText().toString();
         try {
-            String appi = "http://localhost/Appi/usuarios.php?usuario="+usuario+"&clave="+clave+"";
+            String appi = "http://localhost/Appi/btn/usuarios.php?usuario="+usuario+"&clave="+clave+"";
             URL url = new URL(appi);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");

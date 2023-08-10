@@ -5,6 +5,11 @@
  */
 package Base_de_datos;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONArray;
+
 /**
  *
  * @author dayan
@@ -39,7 +44,6 @@ public class Registro_productos extends javax.swing.JFrame {
         tfpresentacion = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         tfprecio = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
@@ -119,25 +123,36 @@ public class Registro_productos extends javax.swing.JFrame {
         });
         getContentPane().add(tfprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, 200, 30));
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton1.setText("Modificar ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 110, 30));
-
-        btnBuscar.setText("Buscar");
         getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, -1, -1));
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, -1, -1));
 
         btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, -1, -1));
 
-        btnInsertar.setText("Insertar");
+        btnInsertar.setText("insertar");
+        btnInsertar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnInsertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/windows22 (1).jpg"))); // NOI18N
@@ -174,9 +189,115 @@ public class Registro_productos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfprecioActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    Metodos medo=new Metodos();
+        String id=tfid.getText();
+        String num=tfnombre.getText();
+        String mar=tfmarca.getText();
+        String present=tfpresentacion.getText();
+        String prec=tfprecio.getText();
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/registro_buscar.php?id="+id+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println(leer);
+                } else {
+                   System.out.println("el id  no existe");
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Registro_productos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
+        Metodos medo=new Metodos();
+        String id=tfid.getText();
+        String num=tfnombre.getText();
+        String mar=tfmarca.getText();
+        String present=tfpresentacion.getText();
+        String prec=tfprecio.getText();
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/registro_buscar.php?id="+id+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println("El id del producto ya existe");
+                } else {
+
+                    medo.insertar("http://localhost/Appi/btn/productos-registro_insertar.php", "id="+id+"&nombre="+num+"&marca="+mar+"&presentacion="+present+"&precio="+prec);
+                    System.out.println("producto guardado correctamente");
+
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Registro_productos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnInsertarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+    Metodos medo=new Metodos();
+        String id=tfid.getText();
+        String num=tfnombre.getText();
+        String mar=tfmarca.getText();
+        String present=tfpresentacion.getText();
+        String prec=tfprecio.getText();
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/registro_buscar.php?id="+id+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println("El id del producto se borro");
+                    medo.borrar("http://localhost/Appi/btn/productos-registro_borrar.php?id="+id+"");
+                } else {
+
+                   System.out.println("el id  no existe");
+
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Registro_productos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+      Metodos medo=new Metodos();
+        String id=tfid.getText();
+        String num=tfnombre.getText();
+        String mar=tfmarca.getText();
+        String present=tfpresentacion.getText();
+        String prec=tfprecio.getText();
+        try {
+            String leer=medo.gett("http://localhost/Appi/btn/registro_buscar.php?id="+id+"");
+            if (leer != null) {
+                JSONArray J= new JSONArray(leer);
+
+                if (J.length() > 0) {
+                    System.out.println("el id del prodroducto se actualizo correctamente");
+                    medo.actualizar("http://localhost/Appi/btn/registro_actualizar.php?id="+id+"&nombre="+num+"&marca="+mar+"&presentacion="+present+"&precio="+prec);
+                    
+                } else {
+
+                    System.out.println("el id del prodroducto no existe");
+
+                }
+            }
+
+        } catch (IOException ex) {
+            System.out.println("error");
+            Logger.getLogger(Registro_productos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,7 +340,6 @@ public class Registro_productos extends javax.swing.JFrame {
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
