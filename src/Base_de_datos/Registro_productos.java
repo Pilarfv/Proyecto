@@ -5,24 +5,104 @@
  */
 package Base_de_datos;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
  * @author dayan
  */
 public class Registro_productos extends javax.swing.JFrame {
-
+DefaultTableModel tabla1;
     /**
      * Creates new form Registro_productos
      */
     String op="";
     public Registro_productos() {
         initComponents();
+        tabla1 = new DefaultTableModel();
+        tabla1.addColumn("id");
+        tabla1.addColumn("nombre");
+        tabla1.addColumn("marca");
+        tabla1.addColumn("presentacion");
+        tabla1.addColumn("precio");
+        this.jTable1.setModel(tabla1);
+        buscar_tabla("http://localhost/Appi/btn/registro_buscar.php");
     }
+    
+    public void buscar_tabla(String x){
+        try {
+            // URL del API
+            URL url = new URL(x);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            
+            int responseCode = conn.getResponseCode();
+            
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader leer = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuilder respuesta = new StringBuilder();
+                
+                while ((inputLine = leer.readLine()) != null) {
+                    respuesta.append(inputLine);
+                }
+                leer.close();
+                tabla1.setRowCount(0);
+                JSONArray jsonArray = new JSONArray(respuesta.toString());
+                
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String id = jsonObject.getString("id");
+                    String nombre = jsonObject.getString("nombre");
+                    String marca = jsonObject.getString("marca");
+                    String presentacion = jsonObject.getString("presentacion");
+                    int precio = jsonObject.getInt("precio");
+                    
+                    tabla1.addRow(new Object[]{id, nombre, marca, presentacion, precio});
+                }
+            } else {
+                System.out.println("Error en la solicitud HTTP: " + responseCode);
+            }
+            
+            conn.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void entrar (String acceso){
+        if (acceso.equals("insertar")){
+            btnActualizar.setEnabled(false);
+             btnBorrar.setEnabled(false);
+              btnBuscar.setEnabled(false);
+            
+        }else if (acceso.equals("borrar")){
+            btnActualizar.setEnabled(false);
+             btnInsertar.setEnabled(false);
+              btnBuscar.setEnabled(false);
+            
+        }else if (acceso.equals("actualizar")){
+            btnInsertar.setEnabled(false);
+             btnBorrar.setEnabled(false);
+              btnBuscar.setEnabled(false);
+            
+        }else if (acceso.equals("buscar")){
+            btnActualizar.setEnabled(false);
+             btnBorrar.setEnabled(false);
+              btnInsertar.setEnabled(false);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,6 +128,8 @@ public class Registro_productos extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnInsertar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,67 +143,67 @@ public class Registro_productos extends javax.swing.JFrame {
                 regresarActionPerformed(evt);
             }
         });
-        getContentPane().add(regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 310, -1, 40));
+        getContentPane().add(regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, -1, 40));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("nombre");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 100, 20));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 100, 20));
 
         tfnombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfnombreActionPerformed(evt);
             }
         });
-        getContentPane().add(tfnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 200, 30));
+        getContentPane().add(tfnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 200, 30));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("id");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 94, 100, 20));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 100, 20));
 
         tfid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfidActionPerformed(evt);
             }
         });
-        getContentPane().add(tfid, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 200, 30));
+        getContentPane().add(tfid, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 200, 30));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("marca");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 100, 20));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 100, 20));
 
         tfmarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfmarcaActionPerformed(evt);
             }
         });
-        getContentPane().add(tfmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 200, 30));
+        getContentPane().add(tfmarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 200, 30));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("presentacion");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 130, 20));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, 20));
 
         tfpresentacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfpresentacionActionPerformed(evt);
             }
         });
-        getContentPane().add(tfpresentacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, 200, 30));
+        getContentPane().add(tfpresentacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 200, 30));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("precio");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 100, 20));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 100, 20));
 
         tfprecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfprecioActionPerformed(evt);
             }
         });
-        getContentPane().add(tfprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, 200, 30));
+        getContentPane().add(tfprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 200, 30));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -155,8 +237,23 @@ public class Registro_productos extends javax.swing.JFrame {
         });
         getContentPane().add(btnInsertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, -1, -1));
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 297, 620, 260));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/windows22 (1).jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 370));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 340));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -202,9 +299,9 @@ public class Registro_productos extends javax.swing.JFrame {
                 JSONArray J= new JSONArray(leer);
 
                 if (J.length() > 0) {
-                    System.out.println(leer);
+                   buscar_tabla("http://localhost/Appi/btn/registro_buscar.php?id="+id+"");
                 } else {
-                   System.out.println("el id  no existe");
+                   System.out.println("El registro_productos no existe");
                 }
             }
 
@@ -227,15 +324,15 @@ public class Registro_productos extends javax.swing.JFrame {
                 JSONArray J= new JSONArray(leer);
 
                 if (J.length() > 0) {
-                    System.out.println("El id del producto ya existe");
+                    System.out.println("El registro_productos ya existe");
                 } else {
 
                     medo.insertar("http://localhost/Appi/btn/productos-registro_insertar.php", "id="+id+"&nombre="+num+"&marca="+mar+"&presentacion="+present+"&precio="+prec);
-                    System.out.println("producto guardado correctamente");
+                    System.out.println("El registro_productos se guardado correctamente");
 
                 }
             }
-
+            buscar_tabla("http://localhost/Appi/btn/registro_buscar.php?");
         } catch (IOException ex) {
             System.out.println("error");
             Logger.getLogger(Registro_productos.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,15 +352,16 @@ public class Registro_productos extends javax.swing.JFrame {
                 JSONArray J= new JSONArray(leer);
 
                 if (J.length() > 0) {
-                    System.out.println("El id del producto se borro");
+                    System.out.println("El registro_productos se borro");
                     medo.borrar("http://localhost/Appi/btn/productos-registro_borrar.php?id="+id+"");
                 } else {
 
-                   System.out.println("el id  no existe");
+                   System.out.println("El registro_productos no existe");
 
                 }
             }
-
+    buscar_tabla("http://localhost/Appi/btn/registro_buscar.php?");
+        
         } catch (IOException ex) {
             System.out.println("error");
             Logger.getLogger(Registro_productos.class.getName()).log(Level.SEVERE, null, ex);
@@ -283,12 +381,12 @@ public class Registro_productos extends javax.swing.JFrame {
                 JSONArray J= new JSONArray(leer);
 
                 if (J.length() > 0) {
-                    System.out.println("el id del prodroducto se actualizo correctamente");
+                    System.out.println("El registro_productos se actualizo correctamente");
                     medo.actualizar("http://localhost/Appi/btn/registro_actualizar.php?id="+id+"&nombre="+num+"&marca="+mar+"&presentacion="+present+"&precio="+prec);
                     
                 } else {
 
-                    System.out.println("el id del prodroducto no existe");
+                    System.out.println("El registro_productos no existe");
 
                 }
             }
@@ -346,6 +444,8 @@ public class Registro_productos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton regresar;
     private javax.swing.JTextField tfid;
     private javax.swing.JTextField tfmarca;

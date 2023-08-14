@@ -5,24 +5,101 @@
  */
 package Base_de_datos;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
  * @author dayan
  */
 public class Actualizacion_inventario extends javax.swing.JFrame {
-
+DefaultTableModel tabla4;
     /**
      * Creates new form Actualizacion_inventario
      */
     String op="";
     public Actualizacion_inventario() {
         initComponents();
+        tabla4 = new DefaultTableModel();
+        tabla4.addColumn("fechcompra");
+        tabla4.addColumn("numfactura");
+        tabla4.addColumn("id");
+        tabla4.addColumn("cantidad");
+        this.jTable1.setModel(tabla4);
+        buscar_tabla("http://localhost/Appi/btn/actualizacion_buscar.php");
     }
+    
+    public void buscar_tabla(String x){
+        try {
+            // URL del API
+            URL url = new URL(x);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            
+            int responseCode = conn.getResponseCode();
+            
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader leer = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuilder respuesta = new StringBuilder();
+                
+                while ((inputLine = leer.readLine()) != null) {
+                    respuesta.append(inputLine);
+                }
+                leer.close();
+                tabla4.setRowCount(0);
+                JSONArray jsonArray = new JSONArray(respuesta.toString());
+                
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    String fechcompra = jsonObject.getString("fechcompra");
+                    String numfactura = jsonObject.getString("numfactura");
+                    String id = jsonObject.getString("id");
+                    int cantidad = jsonObject.getInt("cantidad");
+                    
+                    tabla4.addRow(new Object[]{fechcompra, numfactura, id, cantidad});
+                }
+            } else {
+                System.out.println("Error en la solicitud HTTP: " + responseCode);
+            }
+            
+            conn.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void entrar (String acceso){
+        if (acceso.equals("insertar")){
+            btnActualizar.setEnabled(false);
+             btnBorrar.setEnabled(false);
+              btnBuscar.setEnabled(false);
+            
+        }else if (acceso.equals("borrar")){
+            btnActualizar.setEnabled(false);
+             btnInsertar.setEnabled(false);
+              btnBuscar.setEnabled(false);
+            
+        }else if (acceso.equals("actualizar")){
+            btnInsertar.setEnabled(false);
+             btnBorrar.setEnabled(false);
+              btnBuscar.setEnabled(false);
+            
+        }else if (acceso.equals("buscar")){
+            btnActualizar.setEnabled(false);
+             btnBorrar.setEnabled(false);
+              btnInsertar.setEnabled(false);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,12 +119,13 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
         tfid = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         tfcantidad = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnInsertar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -60,7 +138,7 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
                 regresarActionPerformed(evt);
             }
         });
-        getContentPane().add(regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 290, -1, 40));
+        getContentPane().add(regresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 250, -1, 40));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -110,15 +188,6 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
         });
         getContentPane().add(tfcantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 200, 30));
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton1.setText("Modificar ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 100, 40));
-
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,7 +222,22 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/windows22 (1).jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 350));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 300));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 670, 240));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -182,10 +266,6 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfcantidadActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
     Metodos medo=new Metodos();
         String feco=tffechacompra.getText();
@@ -199,11 +279,11 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
                 JSONArray J= new JSONArray(leer);
 
                 if (J.length() > 0) {
-                    System.out.println("El id del producto se borro");
+                    System.out.println("La actualizacion_inventario se borro");
                     medo.borrar("http://localhost/Appi/btn/actualizacion_borrar.php?numfactura="+nufa+"");
                 } else {
 
-                   System.out.println("el id  no existe");
+                   System.out.println("La actualizacion_inventario no existe");
 
                 }
             }
@@ -227,15 +307,15 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
                 JSONArray J= new JSONArray(leer);
 
                 if (J.length() > 0) {
-                    System.out.println("El id del producto ya existe");
+                    System.out.println("La actualizacion_inventario ya existe");
                 } else {
                     String parametros="fechcompra=" + feco + "&numfactura=" + nufa + "&id=" + id + "&cantidad=" + can;
                     medo.insertar("http://localhost/Appi/btn/actualizacion_insertar.php",parametros);
-                    System.out.println("producto guardado correctamente");
+                    System.out.println("La actualizacion_inventario se guardado correctamente");
 
                 }
             }
-
+         buscar_tabla("http://localhost/Appi/btn/actualizacion_buscar.php?");
         } catch (IOException ex) {
             System.out.println("error");
             Logger.getLogger(Actualizacion_inventario.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,9 +335,9 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
                 JSONArray J= new JSONArray(leer);
 
                 if (J.length() > 0) {
-                    System.out.println(leer);
+                   buscar_tabla("http://localhost/Appi/btn/actualizacion_buscar.php?numfactura="+nufa+"");
                 } else {
-                   System.out.println("el id  no existe");
+                   System.out.println("La actualizacion_inventario no existe");
                 }
             }
 
@@ -280,12 +360,12 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
                 JSONArray J= new JSONArray(leer);
 
                 if (J.length() > 0) {
-                    System.out.println("el id del prodroducto se actualizo correctamente");
+                    System.out.println("La actualizacion_inventario se actualizo correctamente");
                     medo.actualizar("http://localhost/Appi/btn/actualizacion_actualizar.php?fechcompra="+feco+"&numfactura="+nufa+"&id="+id+"&cantidad="+can);
                     
                 } else {
 
-                    System.out.println("el id del prodroducto no existe");
+                    System.out.println("La actualizacion_inventario no existe");
 
                 }
             }
@@ -337,12 +417,13 @@ public class Actualizacion_inventario extends javax.swing.JFrame {
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JButton regresar;
     private javax.swing.JTextField tfcantidad;
     private javax.swing.JTextField tffechacompra;

@@ -128,7 +128,7 @@ public class inicio extends javax.swing.JFrame {
             
             if (J.length() > 0) {
                 // Si el array contiene al menos un objeto, se considera que existe el usuario y clave
-  
+                entrar.entrada(tfnombre.getText());
                 entrar.setVisible(true);
                this.setVisible(false);
             } else {
