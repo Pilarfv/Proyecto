@@ -27,6 +27,7 @@ import com.itextpdf.layout.property.TextAlignment;
 import java.io.File;
 import java.io.IOException;
 import static java.nio.file.Files.lines;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +61,7 @@ DefaultTableModel tabla2;
         buscar_tabla("http://localhost/Appi/btn/venta_buscar.php");
     }
     
-    public void buscar_tabla(String x){
+    public void buscar_tabla(String x){//para que el codigo busque los datos y los ingrese en la tabla
         try {
             // URL del API
             URL url = new URL(x);
@@ -162,11 +163,12 @@ DefaultTableModel tabla2;
         btnActualizar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnInsertar = new javax.swing.JButton();
-        btnImprimir_Ticket = new javax.swing.JButton();
         btnBuscarpro = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -267,7 +269,7 @@ DefaultTableModel tabla2;
                 btnActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, -1, -1));
+        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, -1, -1));
 
         btnBorrar.setText("Borrar");
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
@@ -275,7 +277,7 @@ DefaultTableModel tabla2;
                 btnBorrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, -1, -1));
+        getContentPane().add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, -1, -1));
 
         btnInsertar.setText("Insertar");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
@@ -285,14 +287,6 @@ DefaultTableModel tabla2;
         });
         getContentPane().add(btnInsertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 110, -1, -1));
 
-        btnImprimir_Ticket.setText("Imprimir Ticket");
-        btnImprimir_Ticket.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimir_TicketActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnImprimir_Ticket, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, -1, -1));
-
         btnBuscarpro.setText("Buscar Producto");
         btnBuscarpro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -300,9 +294,6 @@ DefaultTableModel tabla2;
             }
         });
         getContentPane().add(btnBuscarpro, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, -1, -1));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/windows22 (1).jpg"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 350));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -318,6 +309,25 @@ DefaultTableModel tabla2;
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 620, 200));
+
+        jButton1.setText("Generer ticket");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, -1, -1));
+
+        jTextField1.setText("TOTAL");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/windows22 (1).jpg"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -354,7 +364,8 @@ DefaultTableModel tabla2;
     }//GEN-LAST:event_tfprecioActionPerformed
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-    Metodos medo=new Metodos();//existe una clase llamada metodos que contiene métodos y lógica relacionada con la aplicación.
+    //existe una clase llamada metodos que contiene métodos y lógica relacionada con la aplicación.
+        Metodos medo=new Metodos();
         String idv=tfidventa.getText();
         String idp=tfidprod.getText();
         String fe=tffecha.getText();
@@ -386,7 +397,8 @@ DefaultTableModel tabla2;
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void btnBuscarproActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarproActionPerformed
-       Metodos medo=new Metodos(); 
+      //buscar el id e regenerar sus datos automaticamente
+        Metodos medo=new Metodos(); 
         String id=tfidprod.getText();
         String leer;
         try {
@@ -417,7 +429,8 @@ DefaultTableModel tabla2;
     }//GEN-LAST:event_btnBuscarproActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-     Metodos medo=new Metodos();
+    //para buscar el producto en la base de datos
+        Metodos medo=new Metodos();
         String idv=tfidventa.getText();
         String idp=tfidprod.getText();
         String fe=tffecha.getText();
@@ -444,7 +457,8 @@ DefaultTableModel tabla2;
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-    Metodos medo=new Metodos();
+    //borrar los datos de la base de datos
+        Metodos medo=new Metodos();
         String idv=tfidventa.getText();
         String idp=tfidprod.getText();
         String fe=tffecha.getText();
@@ -474,7 +488,8 @@ DefaultTableModel tabla2;
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-    Metodos medo=new Metodos();
+    //la actualizacion de cuaqluier dato ya creada en la base de datos
+        Metodos medo=new Metodos();
         String idv=tfidventa.getText();
         String idp=tfidprod.getText();
         String fe=tffecha.getText();
@@ -503,8 +518,9 @@ DefaultTableModel tabla2;
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
 
-    private void btnImprimir_TicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimir_TicketActionPerformed
-    try {
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+        try {
        File file = new File("C:/Users/PILAR/OneDrive/Documentos/NetBeansProjects/Examen2/Venta "+id_venta+".pdf");
         file.getParentFile().mkdirs();
         
@@ -552,7 +568,11 @@ for (int i = 0; i < productos.size(); i++) {
         } catch (PrinterException ex) {
             Logger.getLogger(Ventas_productos.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnImprimir_TicketActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -594,8 +614,8 @@ for (int i = 0; i < productos.size(); i++) {
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarpro;
-    private javax.swing.JButton btnImprimir_Ticket;
     private javax.swing.JButton btnInsertar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -605,6 +625,7 @@ for (int i = 0; i < productos.size(); i++) {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton regresar;
     private javax.swing.JTextField tfcanpro;
     private javax.swing.JTextField tffecha;
